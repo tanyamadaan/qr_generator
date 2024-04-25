@@ -4,8 +4,8 @@ import { writeFileSync } from "fs";
 const credentials = {
     region: "ap-south-1",
     credentials: {
-        accessKeyId: "AKIAYIRZUKVULSVUWNNG",
-        secretAccessKey: "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"
+        accessKeyId: "",
+        secretAccessKey: ""
     }
 };
 //const client = new S3Client(credentials);
