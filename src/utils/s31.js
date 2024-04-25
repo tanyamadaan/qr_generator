@@ -3,10 +3,6 @@ import csv from "csv-parser";
 import { writeFileSync } from "fs";
 const credentials = {
     region: "ap-south-1",
-    credentials: {
-        accessKeyId: "",
-        secretAccessKey: ""
-    }
 };
 //const client = new S3Client(credentials);
 const s3 = new S3(credentials);
