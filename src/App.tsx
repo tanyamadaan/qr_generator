@@ -14,7 +14,7 @@ import { QrDialog } from "./components";
 import { parseCSV } from "./utils/data"; // Assuming you have exported the function to parse CSV and generate data
 import Stack from "@mui/material/Stack";
 import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
-import { POPOVER_MESSAGES } from "./assets/constants";
+import { DOMAIN_MAPPING, POPOVER_MESSAGES } from "./assets/constants";
 import Popover from "@mui/material/Popover";
 import IconButton from "@mui/material/IconButton";
 
