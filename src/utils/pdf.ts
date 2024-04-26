@@ -1,6 +1,6 @@
 import { PDFDocument } from "pdf-lib";
 
-export async function pdf(qrCodeImageBytes: any){
+export async function pdf(qrCodeImageBytes: any, providerName: string){
   try {
     // Load existing PDF
     const response = await fetch('Poster.pdf');
@@ -31,7 +31,11 @@ export async function pdf(qrCodeImageBytes: any){
       width: qrDims.width,
       height: qrDims.height,
     });
-    
+    page.drawText(providerName,{
+      x: 120,
+      y: 700
+    })
+
     // Save modified PDF
     const modifiedPdfBytes = await pdfDoc.save();
     // fs.writeFileSync('../assets/modified.pdf', modifiedPdfBytes);

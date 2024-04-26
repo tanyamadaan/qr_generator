@@ -197,7 +197,7 @@ function App() {
 									>
 										{domainOptions.map((domain) => (
 											<MenuItem key={domain} value={domain}>
-												{domain}
+												{DOMAIN_MAPPING[domain as keyof typeof DOMAIN_MAPPING]}
 											</MenuItem>
 										))}
 									</Select>
@@ -259,6 +259,7 @@ function App() {
 						domain: selectedDomain,
 						provider_id: getProviderId(),
 					})}
+					providerName={selectedProviderName}
 				/>
 				<Popover
 					sx={{
