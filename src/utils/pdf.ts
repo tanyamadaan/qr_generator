@@ -19,12 +19,12 @@ export async function pdf(qrCodeImageBytes: any){
     console.log("qrImage", qrImage)
 
     // Embed QR code image
-    const qrDims = qrImage.scale(0.23); // Adjust size as needed
+    const qrDims = qrImage.scale(0.16); // Adjust size as needed
     console.log("qrDims", qrDims)
     console.log("qrImage", qrImage)
     const page = pdfDoc.getPages()[0]; // Assuming first page
-    const qrX = 280; // X coordinate
-    const qrY = 530; // Y coordinate
+    const qrX = 230; // X coordinate
+    const qrY = 500; // Y coordinate
     page.drawImage(qrImage, {
       x: qrX,
       y: qrY,
