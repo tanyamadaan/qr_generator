@@ -13,9 +13,10 @@ type QrDialogProps = {
   onClose: () => void;
   open: boolean;
   qrData: string;
+  providerName: string
 };
 
-export const QrDialog = ({ onClose, open, qrData }: QrDialogProps) => {
+export const QrDialog = ({ onClose, open, qrData, providerName }: QrDialogProps) => {
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [logoProps, setLogoProps] = useState({
     logoImage: "",
@@ -33,7 +34,7 @@ export const QrDialog = ({ onClose, open, qrData }: QrDialogProps) => {
             .toDataURL("image/png")
             .replace("image/png", "image/octet-stream");
 
-          const pdfCreated = await pdf(pngUrl);
+          const pdfCreated = await pdf(pngUrl, providerName);
           const blob = new Blob([pdfCreated as Uint8Array], {
             type: "application/pdf",
           });
@@ -86,7 +87,7 @@ export const QrDialog = ({ onClose, open, qrData }: QrDialogProps) => {
         .toDataURL("image/png")
         .replace("image/png", "image/octet-stream");
 
-      const pdfCreated = await pdf(pngUrl);
+      const pdfCreated = await pdf(pngUrl, providerName);
       const blob = new Blob([pdfCreated as Uint8Array], {
         type: "application/pdf",
       });
@@ -109,7 +110,7 @@ export const QrDialog = ({ onClose, open, qrData }: QrDialogProps) => {
   return (
     <Dialog onClose={onClose} open={open} maxWidth="md">
       <DialogContent>
-        {pdfUrl && <PdfViewer pdfUrl={pdfUrl} onClose={onClose} />}
+        {pdfUrl &&  <Document file={pdfUrl}><Page pageNumber={1}/></Document>}
         <QRCode
           size={450}
           ecLevel="H"
@@ -127,19 +128,6 @@ export const QrDialog = ({ onClose, open, qrData }: QrDialogProps) => {
         </Button>
       </DialogActions>
     </Dialog>
-  );
-};
-
-const PdfViewer = ({
-  pdfUrl,
-}: {
-  pdfUrl: string;
-  onClose: () => void;
-}) => {
-  return (
-    <Document file={pdfUrl}>
-      <Page pageNumber={1} />
-    </Document>
   );
 };
 
