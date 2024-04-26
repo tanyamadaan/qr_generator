@@ -1,13 +1,13 @@
-const { PDFDocument, PNG } = require('pdf-lib');
-const fs = require('fs').promises;
+import { PDFDocument } from "pdf-lib";
 
-async function pdf() {
+export async function pdf(qrCodeImageBytes: any){
   try {
     // Load existing PDF
-    const existingPdfBytes = await fs.readFile('../assets/Poster.pdf');
+    const response = await fetch('Poster.pdf');
+	  const existingPdfBytes = await response.arrayBuffer()
 
     // Load QR code image
-    const qrCodeImageBytes = await fs.readFile('qr.png'); // Assuming the QR code image is in the same directory
+    // const qrCodeImageBytes = await fs.readFile('qr.png'); // Assuming the QR code image is in the same directory
     console.log("qrCodeImageBytes", qrCodeImageBytes)
     // const qrCodeImage = await PDFDocument.createEmbeddedPng(qrCodeImageBytes);
     // console.log("qrCodeImage", qrCodeImage)
@@ -34,12 +34,13 @@ async function pdf() {
 
     // Save modified PDF
     const modifiedPdfBytes = await pdfDoc.save();
-    await fs.writeFile('modified.pdf', modifiedPdfBytes);
+    // fs.writeFileSync('../assets/modified.pdf', modifiedPdfBytes);
 
     console.log('PDF modification completed successfully.');
+    return modifiedPdfBytes
   } catch (error) {
     console.error('Error:', error);
   }
 }
 
-pdf();
+// pdf();

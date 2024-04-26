@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
+// import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
-const client = new S3Client({});
+// const client = new S3Client({});
 
 type JsonObject = Record<string, any>;
 

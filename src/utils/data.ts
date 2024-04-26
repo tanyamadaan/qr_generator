@@ -8,7 +8,7 @@ type provider_data = {
 };
 
 export const parseCSV = async () => {
-    const csvFilePath = 's3data1.csv'; // Assuming the CSV file is in the "assets" directory
+    const csvFilePath = 'sample_data.csv'; // Assuming the CSV file is in the "assets" directory
 
     try {
         const response = await fetch(csvFilePath);
@@ -17,7 +17,7 @@ export const parseCSV = async () => {
         }
 
         const fileContent = await response.text();
-        console.log("fileContent", fileContent)
+        // console.log("fileContent:: ", fileContent)
 
         const { data: result, errors }: ParseResult<provider_data> = Papa.parse(fileContent, {
             header: true, // Assuming the first row contains headers

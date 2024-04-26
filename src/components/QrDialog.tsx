@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
-import { transformJSON } from "../utils";
+import { pdf, transformJSON } from "../utils";
 import { QRCode } from "react-qrcode-logo";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
 
 type QrDialog = {
 	onClose: () => void;
@@ -56,7 +58,30 @@ export const QrDialog = ({ onClose, open, qrData }: QrDialog) => {
 
 	const link = transformJSON(qrData);
 	// const link = qrData;
-    console.log("QR:::",link)
+  console.log("QR:::",link)
+
+	const downloadQr = async () => {
+		console.log("Downloading QR")
+
+		const canvas: any = document.getElementById("qr-code-component");
+    if(canvas) {
+      const pngUrl = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "image/octet-stream");
+			
+			const pdfCreated = await pdf(pngUrl)
+			const blob = new Blob([pdfCreated as Uint8Array], { type: 'application/pdf' });
+			const blobUrl = URL.createObjectURL(blob);
+			console.log("PDF GENERATED", pdfCreated)
+			
+      let downloadLink = document.createElement("a");
+      downloadLink.href =   blobUrl; //pngUrl
+      downloadLink.download = `QR.pdf`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    }
+	}
 
 	return (
 		<Dialog onClose={onClose} open={open} >
@@ -81,8 +106,12 @@ export const QrDialog = ({ onClose, open, qrData }: QrDialog) => {
 					logoImage={logoProps.logoImage}
 					logoHeight={logoProps.logoHeight}
 					logoWidth={logoProps.logoWidth}
+					id="qr-code-component"
 				/>
 			</DialogContent>
+			<DialogActions>
+				<Button variant="contained" onClick={downloadQr}>Download QR</Button>
+			</DialogActions>
 		</Dialog>
 	);
 };
