@@ -222,7 +222,7 @@ function App() {
 												(e) =>
 													e.bpp_id === selectedBppId &&
 													e.provider_name === selectedProviderName
-											)[0].provider_id
+											)[0]?.provider_id || ""
 										}
 										disabled
 									/>
