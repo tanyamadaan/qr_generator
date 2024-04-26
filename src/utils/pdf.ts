@@ -31,7 +31,7 @@ export async function pdf(qrCodeImageBytes: any){
       width: qrDims.width,
       height: qrDims.height,
     });
-
+    
     // Save modified PDF
     const modifiedPdfBytes = await pdfDoc.save();
     // fs.writeFileSync('../assets/modified.pdf', modifiedPdfBytes);

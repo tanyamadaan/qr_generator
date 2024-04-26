@@ -11,5 +11,9 @@ export const POPOVER_MESSAGES = {
 	domain: {
 		id: "domain",
 		message: "This is the Domain"
+	},
+	providerId: {
+		id: "providerId",
+		message: "This is the Provider ID associated with your BPP ID and Provider Name"
 	}
 }

@@ -38,17 +38,9 @@ function App() {
 	const [popoverAnchor, setPopoverAnchor] = useState<{
 		anchor: HTMLElement | null;
 		message: string;
-	}>({});
+	}>();
 
 	const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-		console.log("SETTING:", {
-			anchor: event.currentTarget,
-			message:
-				// POPOVER_MESSAGES[
-				// 	event.currentTarget.id as keyof typeof POPOVER_MESSAGES
-				// ].message,
-				event.currentTarget.id,
-		});
 		setPopoverAnchor({
 			anchor: event.currentTarget,
 			message:
@@ -218,6 +210,31 @@ function App() {
 									<InfoTwoToneIcon />
 								</IconButton>
 							</Stack>
+							<Stack direction="row" spacing={1} my={1}>
+								<FormControl fullWidth sx={{ my: 2 }}>
+									{/* <InputLabel variant="outlined" id="domain-select-label">
+										Provider ID
+									</InputLabel> */}
+									<TextField
+										label="Provider ID"
+										value={
+											data.filter(
+												(e) =>
+													e.bpp_id === selectedBppId &&
+													e.provider_name === selectedProviderName
+											)[0].provider_id
+										}
+										disabled
+									/>
+								</FormControl>
+								<IconButton
+									onMouseOver={handlePopoverOpen}
+									onMouseLeave={handlePopoverClose}
+									id={POPOVER_MESSAGES.providerId.id}
+								>
+									<InfoTwoToneIcon />
+								</IconButton>
+							</Stack>
 						</>
 					)}
 					<Button
@@ -228,9 +245,10 @@ function App() {
 					>
 						Generate QR
 					</Button>
-          <Typography variant="caption" mt={2}>
-            <b>Note</b>: In case of doubt please reach out to your seller network particpant.
-          </Typography>
+					<Typography variant="caption" mt={2}>
+						<b>Note</b>: In case of doubt please reach out to your seller
+						network particpant.
+					</Typography>
 				</Paper>
 				<QrDialog
 					onClose={() => setShowQrDialog(false)}
@@ -246,8 +264,8 @@ function App() {
 					sx={{
 						pointerEvents: "none",
 					}}
-					open={Boolean(popoverAnchor.anchor)}
-					anchorEl={popoverAnchor.anchor}
+					open={Boolean(popoverAnchor?.anchor)}
+					anchorEl={popoverAnchor?.anchor}
 					anchorOrigin={{
 						vertical: "bottom",
 						horizontal: "left",
@@ -259,7 +277,7 @@ function App() {
 					onClose={handlePopoverClose}
 					disableRestoreFocus
 				>
-					<Typography sx={{ p: 1 }}>{popoverAnchor.message}</Typography>
+					<Typography sx={{ p: 1 }}>{popoverAnchor?.message}</Typography>
 				</Popover>
 			</Container>
 		</Layout>
