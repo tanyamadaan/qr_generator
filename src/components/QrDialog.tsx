@@ -109,7 +109,7 @@ export const QrDialog = ({ onClose, open, qrData }: QrDialogProps) => {
   return (
     <Dialog onClose={onClose} open={open} maxWidth="md">
       <DialogContent>
-        {pdfUrl && <PdfViewer pdfUrl={pdfUrl} onClose={onClose} />}
+        {pdfUrl &&  <Document file={pdfUrl}><Page pageNumber={1}/></Document>}
         <QRCode
           size={450}
           ecLevel="H"
@@ -127,19 +127,6 @@ export const QrDialog = ({ onClose, open, qrData }: QrDialogProps) => {
         </Button>
       </DialogActions>
     </Dialog>
-  );
-};
-
-const PdfViewer = ({
-  pdfUrl,
-}: {
-  pdfUrl: string;
-  onClose: () => void;
-}) => {
-  return (
-    <Document file={pdfUrl}>
-      <Page pageNumber={1} />
-    </Document>
   );
 };
 
