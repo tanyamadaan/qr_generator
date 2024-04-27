@@ -1,10 +1,10 @@
-import { PDFDocument } from "pdf-lib";
+import { PDFDocument, StandardFonts } from "pdf-lib";
 
-export async function pdf(qrCodeImageBytes: any, providerName: string){
+export async function pdf(qrCodeImageBytes: any, providerName: string) {
   try {
     // Load existing PDF
-    const response = await fetch('Poster.pdf');
-	  const existingPdfBytes = await response.arrayBuffer()
+    const response = await fetch("Poster.pdf");
+    const existingPdfBytes = await response.arrayBuffer();
 
     // Load QR code image
     // const qrCodeImageBytes = await fs.readFile('qr.png'); // Assuming the QR code image is in the same directory
@@ -19,7 +19,8 @@ export async function pdf(qrCodeImageBytes: any, providerName: string){
     // console.log("qrImage", qrImage)
 
     // Embed QR code image
-    const qrDims = qrImage.scale(0.28); // Adjust size as needed
+
+    const qrDims = qrImage.scale(0.165); // Adjust size as needed
     // console.log("qrDims", qrDims)
     // console.log("qrImage", qrImage)
     const page = pdfDoc.getPages()[0]; // Assuming first page
@@ -32,21 +33,30 @@ export async function pdf(qrCodeImageBytes: any, providerName: string){
       height: qrDims.height,
     });
 
-    page.setFontSize(35)
+    page.setFontSize(35);
 
-    page.drawText(providerName.length > 20 ? `${providerName.substring(0,20).trim()}...` : providerName,{
-      x: 140,
-      y: 700
-    })
+    const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+    page.drawText(
+      providerName.length > 20
+        ? `${providerName.substring(0, 20).trim()}...`
+        : providerName,
+      {
+        x: 140,
+        y: 700,
+        size: 30,
+        font: helveticaFont,
+      }
+    );
 
     // Save modified PDF
     const modifiedPdfBytes = await pdfDoc.save();
     // fs.writeFileSync('../assets/modified.pdf', modifiedPdfBytes);
 
-    console.log('PDF modification completed successfully.');
-    return modifiedPdfBytes
+    console.log("PDF modification completed successfully.");
+    return modifiedPdfBytes;
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
   }
 }
 
