@@ -42,6 +42,7 @@ export async function pdf(
     const helveticaFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
     const s = providerName.replace(/(\w)(\w*)/g, function (g0, g1, g2) {
+      console.log(g0, g1, g2)
       return g1.toUpperCase() + g2.toLowerCase();
     });
 
