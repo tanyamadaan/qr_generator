@@ -19,7 +19,6 @@ export async function pdf(qrCodeImageBytes: any, providerName: string) {
     // console.log("qrImage", qrImage)
 
     // Embed QR code image
-
     const qrDims = qrImage.scale(0.165); // Adjust size as needed
     // console.log("qrDims", qrDims)
     // console.log("qrImage", qrImage)

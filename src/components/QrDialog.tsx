@@ -13,10 +13,15 @@ type QrDialogProps = {
   onClose: () => void;
   open: boolean;
   qrData: string;
-  providerName: string
+  providerName: string;
 };
 
-export const QrDialog = ({ onClose, open, qrData, providerName }: QrDialogProps) => {
+export const QrDialog = ({
+  onClose,
+  open,
+  qrData,
+  providerName,
+}: QrDialogProps) => {
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [logoProps, setLogoProps] = useState({
     logoImage: "",
@@ -110,7 +115,11 @@ export const QrDialog = ({ onClose, open, qrData, providerName }: QrDialogProps)
   return (
     <Dialog onClose={onClose} open={open} maxWidth="md">
       <DialogContent>
-        {pdfUrl &&  <Document file={pdfUrl}><Page pageNumber={1}/></Document>}
+        {pdfUrl && (
+          <Document file={pdfUrl}>
+            <Page pageNumber={1} />
+          </Document>
+        )}
         <QRCode
           size={450}
           ecLevel="H"
