@@ -96,7 +96,7 @@ export const QrDialog = ({ onClose, open, qrData, providerName }: QrDialogProps)
 
       let downloadLink = document.createElement("a");
       downloadLink.href = blobUrl; //pngUrl
-      downloadLink.download = `QR.pdf`;
+      downloadLink.download = `${providerName} QR.pdf`;
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
