@@ -6,6 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import { Document, Page, pdfjs } from "react-pdf";
+import { useTheme } from "@mui/material/styles";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -28,6 +29,47 @@ export const QrDialog = ({
     logoHeight: 0,
     logoWidth: 0,
   });
+  // const [width, setWidth] = useState(window.innerWidth);
+
+  // useEffect(() => {
+  //   setWidth(window.innerWidth);
+  // }, []);
+
+  const theme = useTheme();
+  const viewportWidth = window.innerWidth;
+
+  const breakpoints = {
+    xs: theme.breakpoints.values.xs, // e.g., 0
+    sm: theme.breakpoints.values.sm, // e.g., 600
+    md: theme.breakpoints.values.md, // e.g., 960
+    lg: theme.breakpoints.values.lg, // e.g., 1280
+    xl: theme.breakpoints.values.xl, // e.g., 1536
+  };
+
+  let qrScale = 0.165;
+
+  if (viewportWidth < 420) {
+    qrScale = 0.094;
+  } else if (viewportWidth >= 420 && viewportWidth < breakpoints.sm) {
+    qrScale = 0.11;
+  } else if (
+    viewportWidth >= breakpoints.sm &&
+    viewportWidth < breakpoints.md
+  ) {
+    qrScale = 0.165;
+  } else if (
+    viewportWidth >= breakpoints.md &&
+    viewportWidth < breakpoints.lg
+  ) {
+    qrScale = 0.165;
+  } else if (
+    viewportWidth >= breakpoints.lg &&
+    viewportWidth < breakpoints.xl
+  ) {
+    qrScale = 0.165;
+  } else {
+    qrScale = 0.165;
+  }
 
   useEffect(() => {
     const generatePdf = async () => {
@@ -39,7 +81,7 @@ export const QrDialog = ({
             .toDataURL("image/png")
             .replace("image/png", "image/octet-stream");
 
-          const pdfCreated = await pdf(pngUrl, providerName);
+          const pdfCreated = await pdf(pngUrl, providerName, qrScale);
           const blob = new Blob([pdfCreated as Uint8Array], {
             type: "application/pdf",
           });
@@ -92,7 +134,7 @@ export const QrDialog = ({
         .toDataURL("image/png")
         .replace("image/png", "image/octet-stream");
 
-      const pdfCreated = await pdf(pngUrl, providerName);
+      const pdfCreated = await pdf(pngUrl, providerName, qrScale);
       const blob = new Blob([pdfCreated as Uint8Array], {
         type: "application/pdf",
       });
