@@ -8,7 +8,7 @@ export async function pdf(qrCodeImageBytes: any, providerName: string){
 
     // Load QR code image
     // const qrCodeImageBytes = await fs.readFile('qr.png'); // Assuming the QR code image is in the same directory
-    console.log("qrCodeImageBytes", qrCodeImageBytes)
+    // console.log("qrCodeImageBytes", qrCodeImageBytes)
     // const qrCodeImage = await PDFDocument.createEmbeddedPng(qrCodeImageBytes);
     // console.log("qrCodeImage", qrCodeImage)
 
@@ -16,12 +16,12 @@ export async function pdf(qrCodeImageBytes: any, providerName: string){
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
 
     const qrImage = await pdfDoc.embedPng(qrCodeImageBytes);
-    console.log("qrImage", qrImage)
+    // console.log("qrImage", qrImage)
 
     // Embed QR code image
-    const qrDims = qrImage.scale(0.16); // Adjust size as needed
-    console.log("qrDims", qrDims)
-    console.log("qrImage", qrImage)
+    const qrDims = qrImage.scale(0.28); // Adjust size as needed
+    // console.log("qrDims", qrDims)
+    // console.log("qrImage", qrImage)
     const page = pdfDoc.getPages()[0]; // Assuming first page
     const qrX = 230; // X coordinate
     const qrY = 500; // Y coordinate
@@ -31,8 +31,11 @@ export async function pdf(qrCodeImageBytes: any, providerName: string){
       width: qrDims.width,
       height: qrDims.height,
     });
-    page.drawText(providerName,{
-      x: 120,
+
+    page.setFontSize(35)
+
+    page.drawText(providerName.length > 20 ? `${providerName.substring(0,20).trim()}...` : providerName,{
+      x: 140,
       y: 700
     })
 
