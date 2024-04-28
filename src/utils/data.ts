@@ -24,6 +24,9 @@ export const parseCSV = async () => {
             skipEmptyLines: true,
         });
 
+        console.log("TOTAL LENGTH ::::", result.length)
+        console.log("FILTERED", result.filter(e =>e.bpp_id === "webapi.magicpin.in/oms_partner/ondc" && e.domain.startsWith("ONDC:RET")))
+
         if (errors.length > 0) {
             throw new Error(`CSV parsing errors: ${errors.join(', ')}`);
         }
@@ -31,6 +34,7 @@ export const parseCSV = async () => {
         const filteredResult: provider_data[] = result.filter((item: provider_data) => {
             return item.domain.startsWith("ONDC:RET");
         });
+        console.log("FILTERED LENGTH :::", filteredResult.length)
 
         return filteredResult as provider_data[];
     } catch (error) {
