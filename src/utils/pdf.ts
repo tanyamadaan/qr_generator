@@ -2,40 +2,36 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { getTextPlacement } from "./getTextPlacement";
 
 export async function pdf(
-	qrCodeImageBytes: any,
+	qrCodeImageBytes: Buffer,
 	providerName: string,
-	scale: number
 ) {
 	try {
-		// Load existing PDF
 		const response = await fetch("Poster.pdf");
 		const existingPdfBytes = await response.arrayBuffer();
 
-		// Load QR code image
-		// const qrCodeImageBytes = await fs.readFile('qr.png'); // Assuming the QR code image is in the same directory
-		// console.log("qrCodeImageBytes", qrCodeImageBytes)
-		// const qrCodeImage = await PDFDocument.createEmbeddedPng(qrCodeImageBytes);
-		// console.log("qrCodeImage", qrCodeImage)
-
-		// Load PDF document
 		const pdfDoc = await PDFDocument.load(existingPdfBytes);
+		const page = pdfDoc.getPages()[0]; 
+		const pageHeight = page.getHeight();
+		const pageWidth = page.getWidth();
 
 		const qrImage = await pdfDoc.embedPng(qrCodeImageBytes);
-		// console.log("qrImage", qrImage)
+		const qrBoxWidth = 140;
+		const qrBoxHeight = 140;
+		const scaleX = qrBoxWidth / qrImage.width;
+		const scaleY = qrBoxHeight / qrImage.height;
+		const scale = Math.min(scaleX, scaleY);
 
-		// Embed QR code image
+		const qrX = 0.5 * (pageWidth - qrBoxWidth);
+		const qrY = 0.7 * (pageHeight - qrBoxHeight);
 
-		const qrDims = qrImage.scale(scale); // Adjust size as needed
-		// console.log("qrDims", qrDims)
-		// console.log("qrImage", qrImage)
-		const page = pdfDoc.getPages()[0]; // Assuming first page
-		const qrX = 230; // X coordinate
-		const qrY = 500; // Y coordinate
+		const imageWidth = qrImage.width * scale;
+		const imageHeight = qrImage.height * scale;
+
 		page.drawImage(qrImage, {
-			x: qrX,
-			y: qrY,
-			width: qrDims.width,
-			height: qrDims.height,
+			x: qrX + 0.5 * (qrBoxWidth - imageWidth),
+			y: qrY + 0.5 * (qrBoxHeight - imageHeight),
+			width: imageWidth,
+			height: imageHeight,
 		});
 
 		const helveticaFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
@@ -43,8 +39,6 @@ export async function pdf(
 		providerName = providerName.replace(/(\w)(\w*)/g, function (_g0, g1, g2) {
 			return g1.toUpperCase() + g2.toLowerCase();
 		});
-
-		const pageWidth = page.getWidth();
 
 		const textWithPositions = getTextPlacement(
 			providerName,
@@ -60,14 +54,10 @@ export async function pdf(
 				font: helveticaFont,
 				color: rgb(0.35, 0.35, 0.35),
 				lineHeight,
-				// textAlign: TextAlignment.Center,
 			});
 		});
 
-
-		// Save modified PDF
 		const modifiedPdfBytes = await pdfDoc.save();
-		// fs.writeFileSync('../assets/modified.pdf', modifiedPdfBytes);
 
 		console.log("PDF modification completed successfully.");
 		return modifiedPdfBytes;
@@ -76,4 +66,3 @@ export async function pdf(
 	}
 }
 
-// pdf();

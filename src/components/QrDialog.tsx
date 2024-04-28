@@ -1,12 +1,11 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
-import { getScale, pdf, transformJSON } from "../utils";
+import { pdf, transformJSON } from "../utils";
 import { QRCode } from "react-qrcode-logo";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import { Document, Page, pdfjs } from "react-pdf";
-import { useTheme } from "@mui/material/styles";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -35,21 +34,6 @@ export const QrDialog = ({
 	//   setWidth(window.innerWidth);
 	// }, []);
 
-	const theme = useTheme();
-	const viewportWidth = window.innerWidth;
-
-	const breakpoints = {
-		xs: theme.breakpoints.values.xs, // e.g., 0
-		sm: theme.breakpoints.values.sm, // e.g., 600
-		md: theme.breakpoints.values.md, // e.g., 960
-		lg: theme.breakpoints.values.lg, // e.g., 1280
-		xl: theme.breakpoints.values.xl, // e.g., 1536
-	};
-
-	const qrScale = useMemo(
-		() => getScale(viewportWidth, breakpoints),
-		[viewportWidth]
-	);
 
 	useEffect(() => {
 		const generatePdf = async () => {
@@ -61,7 +45,7 @@ export const QrDialog = ({
 						.toDataURL("image/png")
 						.replace("image/png", "image/octet-stream");
 
-					const pdfCreated = await pdf(pngUrl, providerName, qrScale);
+					const pdfCreated = await pdf(pngUrl, providerName);
 					const blob = new Blob([pdfCreated as Uint8Array], {
 						type: "application/pdf",
 					});
@@ -106,20 +90,9 @@ export const QrDialog = ({
 
 	const downloadQr = async () => {
 
-		const canvas: any = document.getElementById("qr-code-component");
-		if (canvas) {
-			const pngUrl = canvas
-				.toDataURL("image/png")
-				.replace("image/png", "image/octet-stream");
-
-			const pdfCreated = await pdf(pngUrl, providerName, qrScale);
-			const blob = new Blob([pdfCreated as Uint8Array], {
-				type: "application/pdf",
-			});
-			const blobUrl = URL.createObjectURL(blob);
-
+		if (pdfUrl) {
 			let downloadLink = document.createElement("a");
-			downloadLink.href = blobUrl; //pngUrl
+			downloadLink.href = pdfUrl;
 			downloadLink.download = `${providerName} QR.pdf`;
 			document.body.appendChild(downloadLink);
 			downloadLink.click();
