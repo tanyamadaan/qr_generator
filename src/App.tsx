@@ -254,10 +254,9 @@ function App() {
 					onClose={() => setShowQrDialog(false)}
 					open={showQrDialog}
 					qrData={JSON.stringify({
-						bpp_id: selectedBppId,
-						provider_name: selectedProviderName,
-						domain: selectedDomain,
-						provider_id: getProviderId(),
+						"context.bpp_id": selectedBppId,
+						"context.domain": selectedDomain,
+						"message.intent.provider.id": getProviderId(),
 					})}
 					providerName={selectedProviderName}
 				/>

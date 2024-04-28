@@ -101,6 +101,7 @@ export const QrDialog = ({
 	};
 
 	const link = transformJSON(qrData);
+	console.log(link)
 
 
 	return (
