@@ -1,10 +1,12 @@
 import Papa, { ParseResult } from 'papaparse';
 
-type provider_data = {
+export type ProviderData = {
     bpp_id: string;
     provider_id: string;
     domain: string;
     provider_name: string;
+    street: string;
+    locality: string;
 };
 
 export const parseCSV = async () => {
@@ -19,7 +21,7 @@ export const parseCSV = async () => {
         const fileContent = await response.text();
         // console.log("fileContent:: ", fileContent)
 
-        const { data: result, errors }: ParseResult<provider_data> = Papa.parse(fileContent, {
+        const { data: result, errors }: ParseResult<ProviderData> = Papa.parse(fileContent, {
             header: true, // Assuming the first row contains headers
             skipEmptyLines: true,
         });
@@ -31,12 +33,12 @@ export const parseCSV = async () => {
             throw new Error(`CSV parsing errors: ${errors.join(', ')}`);
         }
 
-        const filteredResult: provider_data[] = result.filter((item: provider_data) => {
+        const filteredResult: ProviderData[] = result.filter((item: ProviderData) => {
             return item.domain.startsWith("ONDC:RET");
         });
         console.log("FILTERED LENGTH :::", filteredResult.length)
 
-        return filteredResult as provider_data[];
+        return filteredResult as ProviderData[];
     } catch (error) {
         console.error('Error fetching/parsing CSV:', error);
         throw error;
