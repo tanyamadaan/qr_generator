@@ -26,9 +26,7 @@ function App() {
 	const [uniqueProviderNames, setUniqueProviderNames] = useState<string[]>([]);
 	const [selectedDomain, setSelectedDomain] = useState<string>("");
 	const [data, setData] = useState<ProviderData[]>([]);
-	const [showBppIdDomain, setShowBppIdDomain] = useState<boolean>(false);
 	const [selectedStreet, setSelectedStreet] = useState<string>("");
-	const [selectedLocality, setSelectedLocality] = useState<string>("");
 
 	const [popoverAnchor, setPopoverAnchor] = useState<{
 		anchor: HTMLElement | null;
@@ -75,14 +73,6 @@ function App() {
 			data
 				.filter((item) => item.provider_name === selectedProviderName)
 				.map((item) => item.street)
-		),
-	];
-
-	const localityOptions = [
-		...new Set(
-			data
-				.filter((item) => item.provider_name === selectedProviderName)
-				.map((item) => item.locality)
 		),
 	];
 
@@ -152,7 +142,6 @@ function App() {
 							value={selectedProviderName}
 							onChange={(_event, newValue) => {
 								setSelectedProviderName(newValue || "");
-								setShowBppIdDomain(true); // Show bpp_id and domain dropdowns when provider name is selected
 							}}
 							inputValue={selectedProviderName}
 							onInputChange={(_event, newInputValue) =>
@@ -172,60 +161,8 @@ function App() {
 							<InfoTwoToneIcon />
 						</IconButton>
 					</Stack>
-					{showBppIdDomain && ( // Conditionally render bpp_id and domain dropdowns
+					{selectedProviderName.length > 0 && ( // Conditionally render bpp_id and domain dropdowns
 						<>
-							<Stack direction="row" spacing={1} my={1}>
-								<FormControl fullWidth sx={{ my: 2 }}>
-									<InputLabel id="store-address">Address</InputLabel>
-									<Select
-										labelId="store-address"
-										id="store-address-select"
-										value={selectedStreet}
-										onChange={(event) =>
-											setSelectedStreet(event.target.value as string)
-										}
-									>
-										{streetOptions.map((address) => (
-											<MenuItem key={address} value={address}>
-												{address}
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
-								<IconButton
-									onMouseOver={handlePopoverOpen}
-									onMouseLeave={handlePopoverClose}
-									id={POPOVER_MESSAGES.bppId.id}
-								>
-									<InfoTwoToneIcon />
-								</IconButton>
-							</Stack>
-							<Stack direction="row" spacing={1} my={1}>
-								<FormControl fullWidth sx={{ my: 2 }}>
-									<InputLabel id="store-locality">Address</InputLabel>
-									<Select
-										labelId="store-locality"
-										id="store-locality-select"
-										value={selectedLocality}
-										onChange={(event) =>
-											setSelectedLocality(event.target.value as string)
-										}
-									>
-										{localityOptions.map((locality) => (
-											<MenuItem key={locality} value={locality}>
-												{locality}
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
-								<IconButton
-									onMouseOver={handlePopoverOpen}
-									onMouseLeave={handlePopoverClose}
-									id={POPOVER_MESSAGES.bppId.id}
-								>
-									<InfoTwoToneIcon />
-								</IconButton>
-							</Stack>
 							<Stack direction="row" spacing={1} my={1}>
 								<FormControl fullWidth sx={{ my: 2 }}>
 									<InputLabel id="bpp-id-select-label">
@@ -284,6 +221,32 @@ function App() {
 							</Stack>
 							<Stack direction="row" spacing={1} my={1}>
 								<FormControl fullWidth sx={{ my: 2 }}>
+									<InputLabel id="store-street">Store Address</InputLabel>
+									<Select
+										labelId="store-street"
+										id="store-street-select"
+										value={selectedStreet}
+										onChange={(event) =>
+											setSelectedStreet(event.target.value as string)
+										}
+									>
+										{streetOptions.map((street) => (
+											<MenuItem key={street} value={street}>
+												{street}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
+								<IconButton
+									onMouseOver={handlePopoverOpen}
+									onMouseLeave={handlePopoverClose}
+									id={POPOVER_MESSAGES.street.id}
+								>
+									<InfoTwoToneIcon />
+								</IconButton>
+							</Stack>
+							<Stack direction="row" spacing={1} my={1}>
+								<FormControl fullWidth sx={{ my: 2 }}>
 									{/* <InputLabel variant="outlined" id="domain-select-label">
 										Provider ID
 									</InputLabel> */}
@@ -329,8 +292,8 @@ function App() {
 						"context.bpp_id": selectedBppId,
 						"context.domain": selectedDomain,
 						"message.intent.provider.id": getProviderId(),
-						"message.provider.street": selectedStreet,
-						"message.provider.locality": selectedLocality,
+						// "message.provider.street": selectedStreet,
+						// "message.provider.locality": selectedLocality,
 					})}
 					providerName={selectedProviderName}
 				/>
