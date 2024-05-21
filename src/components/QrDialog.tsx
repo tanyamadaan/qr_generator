@@ -99,7 +99,7 @@ export const QrDialog = ({
   };
 
   const link = transformJSON(qrData);
-  console.log("~ link:", link);
+  // console.log("~ link:", link);
 
   return (
     <Dialog onClose={onClose} open={open} maxWidth="md">

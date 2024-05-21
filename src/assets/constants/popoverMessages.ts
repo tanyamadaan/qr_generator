@@ -15,5 +15,13 @@ export const POPOVER_MESSAGES = {
 	providerId: {
 		id: "providerId",
 		message: "This is the Provider ID associated with your BPP ID and Provider Name"
+	},
+	street:{
+		id: "street",
+		message: "This is the street for the store"
+	},
+	locality:{
+		id: "locality",
+		message: "This is the address for the store"
 	}
 }
