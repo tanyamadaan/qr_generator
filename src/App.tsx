@@ -95,7 +95,11 @@ function App() {
 		if (domainOptions.length == 1) {
 			setSelectedDomain(domainOptions[0]);
 		}
-	}, [bppIdOptions, domainOptions]);
+		if (streetOptions.length == 1) {
+			setSelectedStreet(streetOptions[0]);
+		}
+		
+	}, [bppIdOptions, domainOptions, streetOptions]);
 
 	const handleGenerateQR = () => {
 		setShowQrDialog(true);

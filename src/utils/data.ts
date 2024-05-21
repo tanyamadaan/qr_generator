@@ -27,15 +27,15 @@ export const parseCSV = async () => {
 			}
 		);
 
-		console.log("TOTAL LENGTH ::::", result.length);
-		console.log(
-			"FILTERED",
-			result.filter(
-				(e) =>
-					e.bpp_id === "webapi.magicpin.in/oms_partner/ondc" &&
-					e.domain.startsWith("ONDC:RET")
-			)
-		);
+		// console.log("TOTAL LENGTH ::::", result.length);
+		// console.log(
+		// 	"FILTERED",
+		// 	result.filter(
+		// 		(e) =>
+		// 			e.bpp_id === "webapi.magicpin.in/oms_partner/ondc" &&
+		// 			e.domain.startsWith("ONDC:RET")
+		// 	)
+		// );
 
 		if (errors.length > 0) {
 			throw new Error(`CSV parsing errors: ${errors.join(", ")}`);
