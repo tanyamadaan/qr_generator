@@ -53,9 +53,17 @@ function App() {
 				.then((parsedData) => {
 					setData(parsedData);
 					const uniqueNames = [
-						...new Set(parsedData.map((item) => item.provider_name)),
+						...new Set(
+							parsedData
+								.filter((item) =>
+									item.provider_name
+										.toLowerCase()
+										.includes(selectedProviderName.toLowerCase())
+								)
+								.map((item) => item.provider_name)
+						),
 					];
-					setUniqueProviderNames(uniqueNames);
+					setUniqueProviderNames(uniqueNames.slice(0, 11));
 				})
 				.catch((error) => {
 					console.error("Error parsing CSV:", error);
