@@ -27,6 +27,7 @@ function App() {
 	const [selectedDomain, setSelectedDomain] = useState<string>("");
 	const [data, setData] = useState<ProviderData[]>([]);
 	const [selectedStreet, setSelectedStreet] = useState<string>("");
+	const [showOptions, setShowOptions] = useState(false);
 
 	const [popoverAnchor, setPopoverAnchor] = useState<{
 		anchor: HTMLElement | null;
@@ -47,18 +48,19 @@ function App() {
 	};
 
 	useEffect(() => {
-		parseCSV()
-			.then((parsedData) => {
-				setData(parsedData);
-				const uniqueNames = [
-					...new Set(parsedData.map((item) => item.provider_name)),
-				];
-				setUniqueProviderNames(uniqueNames);
-			})
-			.catch((error) => {
-				console.error("Error parsing CSV:", error);
-			});
-	}, []);
+		if (selectedProviderName.length > 3)
+			parseCSV()
+				.then((parsedData) => {
+					setData(parsedData);
+					const uniqueNames = [
+						...new Set(parsedData.map((item) => item.provider_name)),
+					];
+					setUniqueProviderNames(uniqueNames);
+				})
+				.catch((error) => {
+					console.error("Error parsing CSV:", error);
+				});
+	}, [selectedProviderName]);
 
 	const bppIdOptions = [
 		...new Set(
@@ -98,7 +100,6 @@ function App() {
 		if (streetOptions.length == 1) {
 			setSelectedStreet(streetOptions[0]);
 		}
-		
 	}, [bppIdOptions, domainOptions, streetOptions]);
 
 	const handleGenerateQR = () => {
@@ -144,8 +145,9 @@ function App() {
 						<Autocomplete
 							freeSolo
 							value={selectedProviderName}
-							onChange={(_event, newValue) => {
+							onChange={(_event, newValue, reason) => {
 								setSelectedProviderName(newValue || "");
+								if (reason === "selectOption") setShowOptions(true);
 							}}
 							inputValue={selectedProviderName}
 							onInputChange={(_event, newInputValue) =>
@@ -165,7 +167,7 @@ function App() {
 							<InfoTwoToneIcon />
 						</IconButton>
 					</Stack>
-					{selectedProviderName.length > 0 && ( // Conditionally render bpp_id and domain dropdowns
+					{showOptions && ( // Conditionally render bpp_id and domain dropdowns
 						<>
 							<Stack direction="row" spacing={1} my={1}>
 								<FormControl fullWidth sx={{ my: 2 }}>
