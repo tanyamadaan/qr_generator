@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Layout } from "./Layout";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -81,8 +81,13 @@ function App() {
 	const streetOptions = [
 		...new Set(
 			data
-				.filter((item) => item.provider_name === selectedProviderName)
+				.filter(
+					(item) =>
+						item.provider_name === selectedProviderName &&
+						item.bpp_id === selectedBppId
+				)
 				.map((item) => item.street)
+				.sort()
 		),
 	];
 
@@ -97,6 +102,15 @@ function App() {
 				.map((item) => item.domain)
 		),
 	];
+	const providerId = useMemo(() => {
+		const selectedData = data.find((item) =>
+			item.provider_name === selectedProviderName &&
+			item.bpp_id === selectedBppId &&
+			item.domain === selectedDomain &&
+			item.street.toLowerCase().includes(selectedStreet.trim().toLowerCase())
+		);
+		return selectedData?.provider_id ?? "";
+	}, [selectedProviderName, selectedStreet, selectedBppId]);
 
 	useEffect(() => {
 		if (bppIdOptions.length == 1) {
@@ -112,17 +126,6 @@ function App() {
 
 	const handleGenerateQR = () => {
 		setShowQrDialog(true);
-	};
-
-	// Function to get provider_id based on selected options
-	const getProviderId = () => {
-		const selectedData = data.find(
-			(item) =>
-				item.provider_name === selectedProviderName &&
-				item.bpp_id === selectedBppId &&
-				item.domain === selectedDomain
-		);
-		return selectedData?.provider_id ?? "";
 	};
 
 	return (
@@ -264,17 +267,7 @@ function App() {
 									{/* <InputLabel variant="outlined" id="domain-select-label">
 										Provider ID
 									</InputLabel> */}
-									<TextField
-										label="Provider ID"
-										value={
-											data.filter(
-												(e) =>
-													e.bpp_id === selectedBppId &&
-													e.provider_name === selectedProviderName
-											)[0]?.provider_id || ""
-										}
-										disabled
-									/>
+									<TextField label="Provider ID" value={providerId} disabled />
 								</FormControl>
 								<IconButton
 									onMouseOver={handlePopoverOpen}
@@ -305,7 +298,7 @@ function App() {
 					qrData={JSON.stringify({
 						"context.bpp_id": selectedBppId,
 						"context.domain": selectedDomain,
-						"message.intent.provider.id": getProviderId(),
+						"message.intent.provider.id": providerId,
 						// "message.provider.street": selectedStreet,
 						// "message.provider.locality": selectedLocality,
 					})}
