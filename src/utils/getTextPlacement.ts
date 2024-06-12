@@ -6,8 +6,15 @@ function splitStringByMaxLength(input: string, maxLength: number): string[] {
 	const result: string[] = [];
 
 	let currentPart = "";
+	let lineCount =1;
 	for (const word of words) {
 		if ((currentPart + " " + word).trim().length > maxLength) {
+			lineCount++
+			if(lineCount>2){
+				currentPart += "...";
+				
+				break;
+			}
 			result.push(currentPart.trim());
 			currentPart = word;
 		} else {
@@ -35,7 +42,7 @@ export const getTextPlacement = (
 	const centerX = pageWidth / 2;
 
 	const minX = pageWidth / 6;
-	const maxX = (pageWidth * 5) / 6;
+	const maxX = (pageWidth * 4.7) / 6;
 
 	const totalTextWidth = font.widthOfTextAtSize(text, fontSize);
 	let lineHeight = font.heightAtSize(fontSize);
