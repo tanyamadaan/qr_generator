@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Layout } from "./Layout";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -27,6 +27,7 @@ function App() {
 	const [selectedDomain, setSelectedDomain] = useState<string>("");
 	const [data, setData] = useState<ProviderData[]>([]);
 	const [selectedStreet, setSelectedStreet] = useState<string>("");
+	const [showOptions, setShowOptions] = useState(false);
 
 	const [popoverAnchor, setPopoverAnchor] = useState<{
 		anchor: HTMLElement | null;
@@ -47,18 +48,27 @@ function App() {
 	};
 
 	useEffect(() => {
-		parseCSV()
-			.then((parsedData) => {
-				setData(parsedData);
-				const uniqueNames = [
-					...new Set(parsedData.map((item) => item.provider_name)),
-				];
-				setUniqueProviderNames(uniqueNames);
-			})
-			.catch((error) => {
-				console.error("Error parsing CSV:", error);
-			});
-	}, []);
+		if (selectedProviderName.length > 3)
+			parseCSV()
+				.then((parsedData) => {
+					setData(parsedData);
+					const uniqueNames = [
+						...new Set(
+							parsedData
+								.filter((item) =>
+									item.provider_name
+										.toLowerCase()
+										.includes(selectedProviderName.toLowerCase())
+								)
+								.map((item) => item.provider_name)
+						),
+					];
+					setUniqueProviderNames(uniqueNames.slice(0, 11));
+				})
+				.catch((error) => {
+					console.error("Error parsing CSV:", error);
+				});
+	}, [selectedProviderName]);
 
 	const bppIdOptions = [
 		...new Set(
@@ -71,8 +81,13 @@ function App() {
 	const streetOptions = [
 		...new Set(
 			data
-				.filter((item) => item.provider_name === selectedProviderName)
+				.filter(
+					(item) =>
+						item.provider_name === selectedProviderName &&
+						item.bpp_id === selectedBppId
+				)
 				.map((item) => item.street)
+				.sort()
 		),
 	];
 
@@ -87,6 +102,15 @@ function App() {
 				.map((item) => item.domain)
 		),
 	];
+	const providerId = useMemo(() => {
+		const selectedData = data.find((item) =>
+			item.provider_name === selectedProviderName &&
+			item.bpp_id === selectedBppId &&
+			item.domain === selectedDomain &&
+			item.street.toLowerCase().includes(selectedStreet.trim().toLowerCase())
+		);
+		return selectedData?.provider_id ?? "";
+	}, [selectedProviderName, selectedStreet, selectedBppId]);
 
 	useEffect(() => {
 		if (bppIdOptions.length == 1) {
@@ -98,22 +122,10 @@ function App() {
 		if (streetOptions.length == 1) {
 			setSelectedStreet(streetOptions[0]);
 		}
-		
 	}, [bppIdOptions, domainOptions, streetOptions]);
 
 	const handleGenerateQR = () => {
 		setShowQrDialog(true);
-	};
-
-	// Function to get provider_id based on selected options
-	const getProviderId = () => {
-		const selectedData = data.find(
-			(item) =>
-				item.provider_name === selectedProviderName &&
-				item.bpp_id === selectedBppId &&
-				item.domain === selectedDomain
-		);
-		return selectedData?.provider_id ?? "";
 	};
 
 	return (
@@ -144,8 +156,9 @@ function App() {
 						<Autocomplete
 							freeSolo
 							value={selectedProviderName}
-							onChange={(_event, newValue) => {
+							onChange={(_event, newValue, reason) => {
 								setSelectedProviderName(newValue || "");
+								if (reason === "selectOption") setShowOptions(true);
 							}}
 							inputValue={selectedProviderName}
 							onInputChange={(_event, newInputValue) =>
@@ -165,7 +178,7 @@ function App() {
 							<InfoTwoToneIcon />
 						</IconButton>
 					</Stack>
-					{selectedProviderName.length > 0 && ( // Conditionally render bpp_id and domain dropdowns
+					{showOptions && ( // Conditionally render bpp_id and domain dropdowns
 						<>
 							<Stack direction="row" spacing={1} my={1}>
 								<FormControl fullWidth sx={{ my: 2 }}>
@@ -254,17 +267,7 @@ function App() {
 									{/* <InputLabel variant="outlined" id="domain-select-label">
 										Provider ID
 									</InputLabel> */}
-									<TextField
-										label="Provider ID"
-										value={
-											data.filter(
-												(e) =>
-													e.bpp_id === selectedBppId &&
-													e.provider_name === selectedProviderName
-											)[0]?.provider_id || ""
-										}
-										disabled
-									/>
+									<TextField label="Provider ID" value={providerId} disabled />
 								</FormControl>
 								<IconButton
 									onMouseOver={handlePopoverOpen}
@@ -295,7 +298,7 @@ function App() {
 					qrData={JSON.stringify({
 						"context.bpp_id": selectedBppId,
 						"context.domain": selectedDomain,
-						"message.intent.provider.id": getProviderId(),
+						"message.intent.provider.id": providerId,
 						// "message.provider.street": selectedStreet,
 						// "message.provider.locality": selectedLocality,
 					})}
