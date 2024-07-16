@@ -103,11 +103,12 @@ function App() {
 		),
 	];
 	const providerId = useMemo(() => {
-		const selectedData = data.find((item) =>
-			item.provider_name === selectedProviderName &&
-			item.bpp_id === selectedBppId &&
-			item.domain === selectedDomain &&
-			item.street.toLowerCase().includes(selectedStreet.trim().toLowerCase())
+		const selectedData = data.find(
+			(item) =>
+				item.provider_name === selectedProviderName &&
+				item.bpp_id === selectedBppId &&
+				item.domain === selectedDomain &&
+				item.street.toLowerCase().includes(selectedStreet.trim().toLowerCase())
 		);
 		return selectedData?.provider_id ?? "";
 	}, [selectedProviderName, selectedStreet, selectedBppId]);
@@ -282,6 +283,15 @@ function App() {
 					<Button
 						variant="contained"
 						fullWidth
+						disabled={
+							!(
+								showOptions &&
+								selectedBppId.length > 0 &&
+								selectedDomain.length > 0 &&
+								selectedProviderName.length > 0 &&
+								selectedStreet.length > 0
+							)
+						}
 						sx={{ mt: 2 }}
 						onClick={handleGenerateQR}
 					>
