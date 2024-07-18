@@ -42,7 +42,7 @@ export async function pdf(
 
 		const textWithPositions = getTextPlacement(
 			providerName,
-			700,
+			720,
 			pageWidth,
 			helveticaFont
 		);
