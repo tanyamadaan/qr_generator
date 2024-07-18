@@ -21,8 +21,8 @@ export async function pdf(
 		const scaleY = qrBoxHeight / qrImage.height;
 		const scale = Math.min(scaleX, scaleY);
 
-		const qrX = 0.5 * (pageWidth - qrBoxWidth);
-		const qrY = 0.7 * (pageHeight - qrBoxHeight);
+		const qrX = 0.53 * (pageWidth - qrBoxWidth);
+		const qrY = 0.69 * (pageHeight - qrBoxHeight);
 
 		const imageWidth = qrImage.width * scale;
 		const imageHeight = qrImage.height * scale;
@@ -42,7 +42,7 @@ export async function pdf(
 
 		const textWithPositions = getTextPlacement(
 			providerName,
-			700,
+			720,
 			pageWidth,
 			helveticaFont
 		);
