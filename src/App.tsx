@@ -48,26 +48,31 @@ function App() {
 	};
 
 	useEffect(() => {
-		if (selectedProviderName.length > 3)
-			parseCSV()
-				.then((parsedData) => {
+		async function loadData() {
+			if (selectedProviderName.length > 3) {
+				var response = await fetch("/s3data1.json");
+				if (!response.ok) {
+					console.log("Error Loading Provider Data:", response.statusText);
+				} else {
+					const fileContent = await response.text();
+					const parsedData = JSON.parse(fileContent);
 					setData(parsedData);
 					const uniqueNames = [
 						...new Set(
 							parsedData
-								.filter((item) =>
+								.filter((item: any) =>
 									item.provider_name
 										.toLowerCase()
 										.includes(selectedProviderName.toLowerCase())
 								)
-								.map((item) => item.provider_name)
+								.map((item: any) => item.provider_name)
 						),
 					];
-					setUniqueProviderNames(uniqueNames.slice(0, 11));
-				})
-				.catch((error) => {
-					console.error("Error parsing CSV:", error);
-				});
+					setUniqueProviderNames(uniqueNames.slice(0, 11) as string[]);
+				}
+			}
+		}
+		loadData();
 	}, [selectedProviderName]);
 
 	const bppIdOptions = [
