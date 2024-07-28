@@ -15,17 +15,17 @@ export async function pdf(
 		const pageWidth = page.getWidth();
 
 		const qrImage = await pdfDoc.embedPng(qrCodeImageBytes);
-		const qrBoxWidth = 140;
-		const qrBoxHeight = 140;
+		const qrBoxWidth = 145;
+		const qrBoxHeight = 150;
 		const scaleX = qrBoxWidth / qrImage.width;
-		const scaleY = qrBoxHeight / qrImage.height;
+		const scaleY =qrBoxHeight / qrImage.height;
 		const scale = Math.min(scaleX, scaleY);
 
 		const qrX = 0.53 * (pageWidth - qrBoxWidth);
 		const qrY = 0.69 * (pageHeight - qrBoxHeight);
 
-		const imageWidth = qrImage.width * scale;
-		const imageHeight = qrImage.height * scale;
+		const imageWidth = qrImage.width * scale *1.3;
+		const imageHeight = qrImage.height * scale*1.35;
 
 		page.drawImage(qrImage, {
 			x: qrX + 0.5 * (qrBoxWidth - imageWidth),
@@ -42,7 +42,7 @@ export async function pdf(
 
 		const textWithPositions = getTextPlacement(
 			providerName,
-			720,
+			712,
 			pageWidth,
 			helveticaFont
 		);
