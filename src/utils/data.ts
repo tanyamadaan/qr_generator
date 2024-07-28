@@ -41,16 +41,16 @@ export const parseCSV = async () => {
 			throw new Error(`CSV parsing errors: ${errors.join(", ")}`);
 		}
 
-		// const filteredResult: ProviderData[] = result.filter(
-		// 	(item: ProviderData) => {
-		// 		return item.domain.startsWith("ONDC:RET");
-		// 	}
-		// );
+		const filteredResult: ProviderData[] = result.filter(
+			(item: ProviderData) => {
+				return item.domain.startsWith("ONDC:RET");
+			}
+		);
 
 		// console.log("FILTERED LENGTH :::", filteredResult.length)
 		// console.log("STREET EMPTY", filteredResult.filter(e => e.street.length === 0).length)
 		// console.log("LOCALITY EMPTY", filteredResult.filter(e => e.locality.length === 0).length)
-		return result as ProviderData[];
+		return filteredResult as ProviderData[];
 	} catch (error) {
 		console.error("Error fetching/parsing CSV:", error);
 		throw error;

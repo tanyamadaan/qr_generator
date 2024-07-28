@@ -27,6 +27,7 @@ export function transformJSON(
 
 		// Construct the final beckn URL
 		const becknURL = `beckn://ondc?${queryString}`;
+		console.log('becknURL', becknURL)
 		return becknURL;
 	} catch (error) {
 		console.error("Error parsing JSON:", (error as Error).message);
