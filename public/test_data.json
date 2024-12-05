@@ -1,0 +1,429 @@
+[
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "prod.growthfalcons.com/v1/gf"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "GFFBRTRO1689410450",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "webapi.magicpin.in/oms_partner/ondc"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "46015700",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "ondc-prod.uengage.in"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "43071",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "prod.growthfalcons.com/v1/gf"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "GFFBRTSA1684152408",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "webapi.magicpin.in/oms_partner/ondc"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "42787449",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "prod.growthfalcons.com/v1/gf"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "GFFBRTDE1697707512",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET12",
+            "bpp_id": "prod-sellerapp.shiprocket.com"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "253f7ac154c119c230a843a66a92d6b4",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "ultrontest.magicpin.com/oms_partner/ondc"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "47046076",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "webapi.magicpin.in/oms_partner/ondc"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "9143787",
+                    "name": "Spasiba Bakers",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "Shastri Nagar",
+                                "locality": "Shastri Nagar"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "webapi.magicpin.in/oms_partner/ondc"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "32012668",
+                    "name": "Pizza Hut",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "Ambuja City Center",
+                                "locality": "Ambuja City Center"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "webapi.magicpin.in/oms_partner/ondc"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "11405479",
+                    "name": "Ovenstory Pizza",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "Gandhinagar",
+                                "locality": "Gandhinagar"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "prod.growthfalcons.com/v1/gf"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "GFFBRTAD1697707346",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "ultrontest.magicpin.com/oms_partner/ondc"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "46809532",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET12",
+            "bpp_id": "prod-sellerapp.shiprocket.com"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "8937bcdae20a828357c34297b6c62d5c",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "webapi.magicpin.in/oms_partner/ondc"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "47274227",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET10",
+            "bpp_id": "ondc.gofrugal.com"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "21589-ONDC-1",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "webapi.magicpin.in/oms_partner/ondc"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "11587410",
+                    "name": "Birdy's",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "Wadala",
+                                "locality": "Wadala"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "webapi.magicpin.in/oms_partner/ondc"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "48687432",
+                    "name": "KHANA KHAZANA",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "Shakarpur",
+                                "locality": "Shakarpur"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "webapi.magicpin.in/oms_partner/ondc"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "46870155",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+               
+
+ }
+            }
+        }
+    },
+    {
+        "context": {
+            "domain": "ONDC:RET11",
+            "bpp_id": "prod.growthfalcons.com/v1/gf"
+        },
+        "message": {
+            "intent": {
+                "provider": {
+                    "id": "GFFBRTSP1695208854",
+                    "locations": [
+                        {
+                            "address": {
+                                "street": "",
+                                "locality": ""
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+]
